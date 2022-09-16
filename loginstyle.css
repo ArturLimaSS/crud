@@ -1,0 +1,76 @@
+body{
+	margin: 0;
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	font-family: 'Jost', sans-serif;
+}
+
+#login{
+    position: relative;
+    width: 350px;
+    height: 500px;
+    padding: 25px;
+    
+}
+#login_card{
+    box-shadow: 0 0 1em grey;
+    align-items: center;
+    text-align: center;
+    padding: 15px;
+
+}
+
+
+input{
+    width: 60%;
+    height: 20px;
+    justify-content: center;
+    display: flex;
+    margin: 20px auto;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    background-color: rgb(228, 228, 228);
+}
+
+input:hover{
+    background-color: rgb(219, 255, 219);
+}
+input:focus{
+    background-color: aliceblue;
+}
+
+button{
+    width: 65%;
+    height: 37px;
+    border-radius: 5px;
+    border: none;
+    background-color: aqua;
+}
+
+button:hover{
+    background-color: blue;
+    border: none;
+    outline: none;
+}
+button:active{
+    background-color: green;
+    border: none;
+    outline: none;
+}
+
+
+.new_button{
+    background-color: rgb(180, 180, 255);
+}
+
+.new_button:hover{
+    background-color: rgb(115, 190, 255);
+}
+.new_button:active{
+    background-color: rgb(50, 195, 205);
+}

@@ -18,12 +18,10 @@
 require_once '../db/db.php';
 
     $nome = $_POST ['nome'];
-    $email = $_POST ['email'];
-    $contato = $_POST ['contato'];
-    $idade = $_POST['idade'];
+    $data = $_POST ['data_nasc'];
     $estado_civil = $_POST['estado_civil'];
 
-    $insert = "INSERT INTO users (nome, email, contato, idade, estado_civil, status) VALUES ('$nome','$email','$contato', '$idade', '$estado_civil', 1);"; 
+    $insert = "INSERT INTO cliente (nome, data_nasc, estado_civil, status) VALUES ('".$nome."', '".$data."', '".$estado_civil."', 1);"; 
     $insertDb = $conn->query($insert);
     header('location:geCON.php');
 

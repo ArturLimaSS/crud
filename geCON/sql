@@ -1,0 +1,56 @@
+SELECT tb_empreendimento.nome       AS "nome_empreendimento",
+       tb_empreendimento.id         AS "id_empreendimento",
+       \r\n tb_unidade.vaga_garagem AS garagem,
+       \r\n tcu.points              AS coordenadas,
+       \r\n                            tb_empreendimento_config.tipo_espelho,
+       \r\n tb_unidade.bloco        AS "bloco",
+       tb_unidade.unidade           AS "unidade",
+       tb_unidade.modulo            AS "modulo",
+       \r\nIF(( true || tb_unidade.disponibilidade = 'D'), COALESCE(tb_valor_negociacao_unidade.valor, tb_valor_padrao.valor), "**********") as "valor_unidade",\r\n
+IF(( true || tb_unidade.disponibilidade = 'D'),
+IF((COALESCE(tb_avaliacao_banco_unidade.valor_avaliacao, tb_avaliacao_padrao.valor_avaliacao) - COALESCE(tb_valor_negociacao_unidade.valor, tb_valor_padrao.valor)) > 0,\r\n (COALESCE(tb_avaliacao_banco_unidade.valor_avaliacao, tb_avaliacao_padrao.valor_avaliacao) - COALESCE(tb_valor_negociacao_unidade.valor, tb_valor_padrao.valor)),0), "**********") AS "parcela_bonus",\r\n
+IF(( true || tb_unidade.disponibilidade = 'D'),COALESCE(tb_avaliacao_banco_unidade.valor_avaliacao, tb_avaliacao_padrao.valor_avaliacao),"**********") AS "valor_caixa",\r\n
+IF(( true || tb_unidade.disponibilidade = 'D'),
+IF(COALESCE(tb_valor_negociacao_unidade.valor, tb_valor_padrao.valor) > COALESCE(tb_avaliacao_banco_unidade.valor_avaliacao, tb_avaliacao_padrao.valor_avaliacao),\r\n COALESCE(tb_valor_negociacao_unidade.valor, tb_valor_padrao.valor),\r\n COALESCE(tb_avaliacao_banco_unidade.valor_avaliacao, tb_avaliacao_padrao.valor_avaliacao)), "**********") AS 'total_contrato',\r\n tb_unidade_disponibilidade.id_unidade_disponibilidade AS "disponibilidade_unidade",\r\n
+IF(( true || tb_unidade.disponibilidade = 'D'), tb_processo.id, "**********") AS "cod_processo",\r\n
+IF(( true || tb_unidade.disponibilidade = 'D'),tb_proponente.nome,"**********" ) AS "nome_pessoa",\r\n
+IF(( true || tb_unidade.disponibilidade = 'D'),
+INSERT
+       (
+              INSERT
+                     (
+                            INSERT
+                                   (
+                                          tb_proponente.cpf,
+                                          10,
+                                          0,
+                                          '-'
+                                   )
+                                   ,
+                                   \r\n 7,0,
+                                   '.'
+                     )
+                     ,
+                     4,0,
+                     '.'
+       )
+       ,
+       "**********") AS "cpf",\r\n
+IF(( true || tb_unidade.disponibilidade = 'D'), tb_etapas_workflow.nome, "**********") AS "status",\r\n tb_unidade.descricao AS 'descricao_unidade',\r\n tb_unidade.valor_inicial AS 'valor_inicial',\r\n
+IF(( true || tb_unidade.disponibilidade = 'D'), date_format(tb_processo.data_venda,"%d\/%m\/%Y"), "**********") AS "data_contrato",\r\n
+IF(( true || tb_unidade.disponibilidade = 'D'), date_format(tb_processo.data_venda,"%Y-%m-%d"), "**********") AS "data_contrato_sem_formatacao",\r\n
+IF(( true || tb_unidade.disponibilidade = 'D'), date_format( tb_processo.agendamento_assinatura, "%d\/%m\/%Y %H:%i:%s" ), "**********") AS "data_assinatura",\r\n
+IF(( true || tb_unidade.disponibilidade = 'D'), date_format(tb_processo.agendamento_assinatura,"%Y-%m-%d"), "**********") AS "data_assinatura_sem_formatacao",\r\n
+IF(( true || tb_unidade.disponibilidade = 'D'),tb_unidade.faixa_financiamento,"**********") AS "faixa_financiamento",\r\n regex_replace('[^A-Za-z0-9 ]', '', substr(tb_unidade.`descricao` FROM 1 FOR greatest(instr(tb_unidade.`descricao`, 'UN'), instr(tb_unidade.`descricao`, 'LT'), instr(tb_unidade.`descricao`, 'CS')) - 1 ) ) AS 'rotulo_bloco',\r\n area_privativa_total,\r\n area_exclusiva_total,\r\n fracao_ideal,\r\n tb_tipo_unidade.descricao AS tipounidade,\r\n substr(tb_unidade.`descricao` FROM greatest(instr(tb_unidade.`descricao`, 'UN'), instr(tb_unidade.`descricao`, 'LT'), instr(tb_unidade.`descricao`, 'CS')) + 2 ) AS 'rotulo_unidade',\r\n
+IF(( true || tb_unidade.disponibilidade = 'D'), tb_processo.evolucao , "**********") AS evolucao_processo,\r\n tb_unidade_disponibilidade.cor AS cor,\r\n tb_unidade_disponibilidade.descricao AS descricao_disponibilidade,\r\n tb_unidade_disponibilidade.label_status AS label_status_disponibilidade,\r\n tb_unidade.pavimento AS pavimento,\r\n
+IF(( true || tb_unidade.disponibilidade = 'D'), tb_unidade.id , "**********") AS id_unidade,\r\n
+IF(( true || tb_unidade.disponibilidade = 'D'), tb_tipo_permuta.descricao , "**********") AS 'motivo_permuta',\r\n
+IF(( true || tb_unidade.disponibilidade = 'D'), trim(trailing '\\n' FROM tb_unidade.descricao_permuta) , "**********") AS 'descricao_permuta',\r\n
+IF(( true || tb_unidade.disponibilidade = 'D'), tb_faixa_financiamento.descricao, "**********") AS 'faixa_proponente',\r\n
+IF(( true || tb_unidade.disponibilidade = 'D'), tb_equipe.nome, "**********") AS 'nome_equipe',\r\n
+IF(( true || tb_unidade.disponibilidade = 'D'), tb_corretor.nome, "**********") AS 'nome_corretor',\r\n
+IF(( true || tb_unidade.disponibilidade = 'D'), tb_gerente.nome, "**********") AS 'nome_gerente',\r\n
+IF(( true || tb_unidade.disponibilidade = 'D'),true,false) AS "possui_acesso",\r\n
+IF(tb_empreendimento.exportar_espelho_vendas LIKE '%#3#%', true, false) AS 'permite_exportacao',\r\n tb_nome_bloco.nome AS nome_bloco,\r\n
+IF(( true || tb_unidade.disponibilidade = 'D'),tb_avaliacao_padrao.valor_avaliacao,"**********") AS "valor_avaliacao_padrao",\r\n tb_tipo_unidade.id AS idtipounidade,\r\n tb_unidade.info_unidade,\r\n tb_unidade.matricula,\r\n
+IF(( true || tb_unidade.disponibilidade = 'D'),tb_venda.id,"**********") AS "cod_venda"\r\n \/* COALESCE(tb_nome_bloco.nome, CONCAT('Bloco ', LPAD(tb_unidade.bloco, 2, '0'))) AS nome_bloco *\/\r\n FROM tb_unidade\r\n LEFT JOIN tb_processo\r\n ON\r\n tb_processo.id = tb_unidade.processo\r\n LEFT JOIN (tb_venda\r\n JOIN tb_tipo_negociacao ON\r\n tb_venda.tipo = tb_tipo_negociacao.id\r\n ) ON\r\n tb_venda.processo = tb_processo.id\r\n AND tb_venda.situacao = 'F'\r\n AND (   tb_tipo_negociacao.tipo IN ('V',                               \r\n 'D')   OR   tb_venda.cessao_direitos = 'S' ) \r\n LEFT JOIN tb_valor_negociacao_unidade ON\r\n tb_valor_negociacao_unidade.unidade = tb_unidade.id\r\n AND tb_valor_negociacao_unidade.status = '1'\r\n AND tb_tipo_negociacao.id = tb_valor_negociacao_unidade.tipo_negociacao\r\n LEFT JOIN tb_valor_negociacao_unidade tb_valor_padrao ON\r\n tb_valor_padrao.unidade = tb_unidade.id\r\n AND tb_valor_padrao.padrao = 'S'\r\n AND tb_valor_padrao.status = '1'\r\n LEFT JOIN tb_equipe_empreendimento ON tb_equipe_empreendimento.equipe = tb_processo.equipe AND tb_equipe_empreendimento.empreendimento = tb_processo.empreendimento\r\n INNER JOIN\r\n tb_unidade_disponibilidade ON IF(( TRUE || tb_unidade.disponibilidade = 'D') , tb_unidade_disponibilidade.id_unidade_disponibilidade = tb_unidade.disponibilidade,\r\n tb_unidade_disponibilidade.id_unidade_disponibilidade = "I")\r\n INNER JOIN tb_empreendimento ON tb_unidade.empreendimento = tb_empreendimento.id\r\n INNER JOIN\r\n tb_empreendimento_config ON tb_empreendimento.id = tb_empreendimento_config.id_empreendimento\r\n\r\n LEFT JOIN tb_analise_credito ON\r\n IF(tb_venda.id IS NOT NULL,\r\n tb_venda.analise_credito = tb_analise_credito.id,\r\n tb_analise_credito.id = tb_processo.analise_credito)\r\n LEFT JOIN tb_avaliacao_banco_unidade ON\r\n tb_avaliacao_banco_unidade.banco = tb_analise_credito.banco\r\n AND tb_avaliacao_banco_unidade.unidade = tb_unidade.id\r\n AND tb_avaliacao_banco_unidade.status = '1'\r\n LEFT JOIN tb_avaliacao_banco_unidade tb_avaliacao_padrao ON\r\n tb_avaliacao_padrao.padrao = 'S'\r\n AND tb_avaliacao_padrao.unidade = tb_unidade.id\r\n AND tb_avaliacao_padrao.status = '1'\r\n LEFT OUTER JOIN tb_proponente ON tb_processo.proponente1 = tb_proponente.id\r\n LEFT OUTER JOIN tb_etapas_workflow ON tb_processo.etapa_workflow = tb_etapas_workflow.id\r\n LEFT OUTER JOIN tb_tipo_unidade ON tb_unidade.tipo = tb_tipo_unidade.id\r\n LEFT JOIN tb_equipe ON tb_equipe.id = tb_processo.grupo_usuario\r\n LEFT JOIN tb_sgg3_autenticacao tb_corretor ON tb_corretor.id = tb_processo.corretor\r\n LEFT JOIN tb_sgg3_autenticacao tb_gerente ON tb_gerente.id = tb_processo.gerente\r\n LEFT JOIN tb_tipo_permuta ON tb_tipo_permuta.id = tb_unidade.motivo_permuta\r\n LEFT JOIN tb_faixa_financiamento ON tb_faixa_financiamento.id = tb_analise_credito.faixa_financiamento\r\n LEFT JOIN tb_nome_bloco ON tb_nome_bloco.empreendimento = tb_unidade.empreendimento AND tb_nome_bloco.modulo = tb_unidade.modulo AND tb_nome_bloco.bloco = tb_unidade.bloco\r\n LEFT JOIN tb_coordenadas_unidade tcu ON tcu.unidade_id = tb_unidade.id\r\n WHERE tb_unidade.empreendimento = 1 AND tb_unidade.disponibilidade NOT IN ('N') AND tb_unidade.status = '1'\r\n AND tb_unidade.modulo IS NOT NULL\r\n GROUP BY tb_unidade.id ORDER BY tb_unidade.bloco ASC,tb_unidade.pavimento DESC,tb_unidade.ordenacao DESC, tb_empreendimento.id ASC, tb_unidade.unidade DESC
