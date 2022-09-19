@@ -11,11 +11,10 @@
 </head>
 
 <body>
-    <input type="text" name="nome" value="Nome">
-    <input type="date" name="data_nasc" value="1997-10-22">
-    <select name="estado_civil" id="estado_civil">
-        <option value="SOLTEIRO">SOLTEIRO</option>
-    </select>
+    <form action="edita.php">
+        <input type="hidden" id="'.$row['id'].'">
+        <button class="btn btn-link dropdown" type="submit" id="editButton">Editar</button>
+    </form>
 </body>
 
 </html>

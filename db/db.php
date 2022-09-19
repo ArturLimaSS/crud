@@ -13,9 +13,10 @@
     $queryTodosOsDados = "SELECT id, nome, email, senha FROM users WHERE STATUS = 1;";
     $pesquisarTodosOsDados = $conn->query($queryTodosOsDados);
 #PESQUISA TODOS OS DADOS DOS CLIENTES:
-    $queryPesquisaClientes = "SELECT c.`id`, c.`nome`, c.`data_nasc`, ec.`descricao` FROM cliente c JOIN estado_civil ec ON c.`estado_civil` = ec.`id` WHERE c.`status` = 1;";
+    $queryPesquisaClientes = "SELECT c.`id`, c.`nome`, c.`data_nasc`, ec.id as 'estadoCivil', ec.`descricao` FROM cliente c JOIN estado_civil ec ON c.`estado_civil` = ec.`id` WHERE c.`status` = 1;";
     $pesquisarCliente = $conn->query($queryPesquisaClientes);
 #PESQUISA ESTADO CIVIL
-    $queryEstadoCivil = mysqli_query($conn, "select id, descricao from estado_civil;");
+    $selectEstado = "select id, descricao from estado_civil;";
+    $queryEstadoCivil = $conn->query($selectEstado);
     
 ?>

@@ -32,6 +32,10 @@ CREATE TABLE cliente(
 	STATUS TINYINT(2)
 );
 
-
-SELECT c.`id`, c.`nome`, c.`data_nasc`, ec.`descricao` FROM cliente c JOIN estado_civil ec ON c.`estado_civil` = ec.`id` WHERE c.`status` = 1;
+CREATE TABLE dadosCliente(
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	tipo TINYINT(3).
+	id_cliente INT(100),
+	imagem VARCHAR(1000)
+)
 

@@ -1,15 +1,12 @@
 
 
-function mostrarModal() {
+function mostrarModal(id) {
   $(document).ready(function () {
-    $("#modal_edita").on('show.bs.modal', function (e) {
-      var idUsuario = $(e.relatedTarget).data('id');
-      var url = "./edita.php";
-      $('.modal-content').load(url, { idUsuario: idUsuario },
-      function (resultado) {
-      $('#modal_edita').modal({ show: true });
-      }); 
-    });
+    $("#modal_edita").on('show.bs.modal', function(e){
+      var idUsuario = id;
+      var url = "edita.php";
+      $.post(url, {id: idUsuario})
+    }).modal('show');
   });
 }
 
