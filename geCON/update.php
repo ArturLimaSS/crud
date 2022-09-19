@@ -1,18 +1,18 @@
 <?php 
 require_once('../db/db.php');
 
-$idUpdate               = $_POST['idUpdate'];
-$upNome                 = $_POST['nome'];
-$upDataNasc             = $_POST['data_nasc'];
-$upFoto                 = $_POST['foto'];
+$idUpdate                    = $_POST['idEdita'];
+$upNome                      = $_POST['nome'];
+$upDataNasc                  = $_POST['data_nasc'];
+$upFoto                      = $_POST['foto'];
+if(isset($idUpdate)){
+$sql =         
+'UPDATE cliente         
+SET nome                     = "'.$upNome.'", 
+data_nasc                    = "'.$upDataNasc.'", 
+imagem                       = "'.$upFoto.'" 
+WHERE id                     = "'.$_POST['idEdita'].'"';
 
-$sql1 = 
-'UPDATE cliente 
-SET nome                = "'.$upNome.'", 
-data_nasc               ="'.$upDataNasc.'", 
-imagem                  ="'.$upFoto.'" 
-WHERE id                ="'.$idUpdate.'"';
-
-$update                 = $conn->query($sql1);
-header('edita.php');
-?>
+$update                      = $conn->query($sql);
+header('Location: geCON.php');
+};

@@ -4,24 +4,14 @@ include_once './cabecalho.php';
 require_once '../db/db.php';
 
 
-$sql = 'SELECT C.id, 
-C.nome, 
-C.data_nasc,
-C.imagem, 
-ec.descricao, 
-ec.id as "estado_id" 
-FROM cliente C 
-JOIN estado_civil ec ON c.estado_civil = ec.id 
-WHERE C.id="' . $_POST['idEdita'] . '"';
-
-$sql2 = 'SELECT * FROM dadosCliente WHERE id_cliente = "' . $_POST['idEdita'] . '"';
-
-$retorno                = $conn->query($sql);
-$array                  = $retorno->fetch_assoc();
-$nome                   = $array['nome'];
-$data                   = $array['data_nasc'];
-$estadoCivil            = $array['descricao'];
-$foto                   = $array['imagem'];
+$sql 													  = 'SELECT C.id, C.nome, C.data_nasc,C.imagem, ec.descricao, ec.id as "estado_id" FROM cliente C JOIN estado_civil ec ON c.estado_civil = ec.id WHERE C.id="' . $_POST['idEdita'] . '"';
+$retorno                                                  = $conn->query($sql);
+$array                                                    = $retorno->fetch_assoc();
+$nome                                                     = $array['nome'];
+$data                                                     = $array['data_nasc'];
+$estadoCivil                                              = $array['descricao'];
+$foto                                                     = $array['imagem'];
+$idEdita 												  = $array['id'];
 
 ?>
 
@@ -41,7 +31,9 @@ $foto                   = $array['imagem'];
 </head>
 
 <body>
-	<div class="container">
+	<?php 
+	if(isset($_POST['idEdita'])){
+		echo '<div class="container">
 		<div class="row gutters">
 			<div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
 				<div class="card h-100">
@@ -49,19 +41,14 @@ $foto                   = $array['imagem'];
 						<div class="account-settings">
 							<div class="user-profile">
 								<div class="user-avatar">
-									<img src="<?php
-												if (!isset($foto)) {
-													echo 'https://bootdey.com/img/Content/avatar/avatar7.png';
-												} else {
-													echo $foto;
-												} ?>" alt="Maxwell Admin">
+									<img src="'.$foto.'" alt="Maxwell Admin">
 								</div>
-								<h5 class="user-name"><?php echo $nome ?></h5>
-								<h6 class="user-email"><?php echo 'teste' ?></h6>
+								<h5 class="user-name">'. $nome .'</h5>
+								<h6 class="user-email">teste</h6>
 							</div>
 							<div class="about">
 								<h5>About</h5>
-								<p>I'm Yuki. Full Stack Designer I enjoy creating user-centric, delightful and human experiences.</p>
+								<p>Im Yuki. Full Stack Designer I enjoy creating user-centric, delightful and human experiences.</p>
 							</div>
 						</div>
 					</div>
@@ -70,17 +57,16 @@ $foto                   = $array['imagem'];
 			<div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
 				<div class="card h-100">
 					<form action="update.php" method="POST">
-						<input type="hidden" name="idEdita" value="<?php $_POST['idEdita'] ?>">
+						<input type="hidden" name="idEdita" value="'. $array['id'] .'">
 						<div class="card-body">
 							<div class="row gutters">
 								<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 									<h6 class="mb-2 text-primary">Personal Details</h6>
 								</div>
-
 								<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 									<div class="form-group">
 										<label for="fullName">Full Name</label>
-										<input type="text" class="form-control" id="nome" name="nome" value="<?php echo $nome ?>">
+										<input type="text" class="form-control" id="nome" name="nome" value="'.$nome.'">
 									</div>
 								</div>
 								<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -98,13 +84,13 @@ $foto                   = $array['imagem'];
 								<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 									<div class="form-group">
 										<label for="data_nasc">Data de Nascimento</label>
-										<input type="date" class="form-control" name="data_nasc" id="data_nasc" value="<?php echo $data ?>">
+										<input type="date" class="form-control" name="data_nasc" id="data_nasc" value="'. $data.'">
 									</div>
 								</div>
 								<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 									<div class="form-group">
 										<label for="foto">Foto</label>
-										<input type="text" class="form-control" id="foto" name="foto" placeholder="Insira o Link da Foto">
+										<input type="text" class="form-control" id="foto" name="foto" value="'.$foto.'">
 									</div>
 								</div>
 							</div>
@@ -149,7 +135,11 @@ $foto                   = $array['imagem'];
 				</div>
 			</div>
 		</div>
-	</div>
+	</div>'
+	;}
+	
+	
+	?>
 </body>
 
 </html>

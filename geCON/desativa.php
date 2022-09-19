@@ -13,5 +13,5 @@
     if (isset($idCliente)) {
     $update = ('UPDATE cliente SET status = 0 where id ='.$idCliente.';');
     $sql = $conn->query($update);
-    header("Location: options.php");}
+    header("Location: geCON.php");}
 ?>

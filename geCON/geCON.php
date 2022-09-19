@@ -21,14 +21,12 @@ include './cabecalho.php';
             <input id="nome" name="nome" type="text" class="form-control form-control-lg">
             <label for="data_nasc" class="label-form">Nascimento</label>
             <input type="date" name="data_nasc" class="form-control form-control-lg" id="data_nasc">
-            <label for="imagem">Coloque aqui a foto para identificação</label>
-            <input type="text" name="imagem" class="form-control form-control-lg" id="imagem">
             <label for="estado_civil_select" class="form-label">Estado Civil</label>
             <?php require_once '../db/db.php'; ?>
             <select class="form-select form-select-lg" name="estado_civil" id="estado_civil_select">
               <?php while ($resultado = mysqli_fetch_array($queryEstadoCivil)) {
               ?>
-                <option value="<?php $resultado['id'] ?>"><?php echo $resultado['descricao'] ?></option>
+                <option value="<?= $resultado['id'] ?>"><?php echo $resultado['descricao'] ?></option>
               <?php } ?>
             </select>
           </div>
@@ -76,12 +74,16 @@ include './cabecalho.php';
               echo "<tr>";
               //echo "<td>".$row["id"]."</td>";
               echo "<td>" .                       $row["nome"]            . "</td>";
-              echo '<td><input type="date" readonly style="text-align: center" class="form-control" value="'.$row["data_nasc"].'"></input></td>';
+              echo '<td><input type="date" readonly style="text-align: center" class="form-control" value="' . $row["data_nasc"] . '"></input></td>';
               echo '<td>' .                       $row["descricao"]       . '</td>';
               echo '<td>
               <form action="edita.php" method="POST">
                   <input type="hidden" name="idEdita" value="' . $row['id'] . '">
                   <button class="btn btn-link" type="submit">Editar</button>
+              </form>
+              <form action="desativa.php" method="POST">
+                  <input type="hidden" name="idCliente" value="' .$row['id'].'"></input>
+                  <button class="btn btn-link" type="submit">Desativar</button>
               </form>   
               </td>';
             }
